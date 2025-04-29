@@ -11,17 +11,17 @@
     <script>
         window.fbAsyncInit = function() {
             FB.init({
-                appId      : '3559796260982156',  // Reemplaza 'tu-app-id' con el appId de tu aplicación de Facebook
+                appId      : 'id fb',  // Reemplaza 'tu-app-id' con el appId de tu aplicación de Facebook
                 xfbml      : true,
                 version    : 'v22.0'
             });
 
             FB.api(
-                "/671294722725457/feed",
+                "/idpagina/feed",
                 "POST",
                 {
                     access_token:
-                    "EAAylnaebzYwBO6rZA12pBqHCgaZBaySbR9jiSZAvTxkZB6Olp4Ap9UtZBlXD0FPtoozPCdmrDwcdS2QcDK4BLlyLbbCcHFTeJLK9cJdxd3QakVdae2VZCyarKHRjJfIQzWbhCVdtwcFB2GLUspiIhL0zXryQxWNC0ImRWhoWgFPFc7NGcNDVpABZBsGOQnhQzp3p1D7FZBKd7H6ZBOUKgGkWa"
+                    "poner access token"
                 },
                 function (response) {
                     if(response && !response.error) {
