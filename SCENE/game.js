@@ -45,6 +45,10 @@ document.addEventListener("keyup", function(event) {
 });
 
 /*API SHIT*/
+document.getElementById("quit-btn").addEventListener("click", function() {
+    document.getElementById("pause-menu").classList.add("hidden");
+    document.getElementById("share-modal").classList.remove("hidden");
+});
 // Mostrar modal de compartir al hacer clic en "Abandonar"
 document.getElementById("share-btn").addEventListener("click", function() {
     const message = `¡He alcanzado ${kills} kills y ${points} puntos en el juego!`;
