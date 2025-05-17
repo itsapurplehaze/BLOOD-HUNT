@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Registro Jugador</title>
+    <link rel="stylesheet" href="style_mConfi.CSS">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lacquer&display=swap" rel="stylesheet">
 </head>
 <body>
-    
+    <!-- Modal -->
+    <div id="playerModal" class="modal-overlay">
+      <div class="modal">
+        <h1 class="glitch" data-text="Escoge tu usuario">Escoge tu usuario</h1>
+        <input type="text" id="playerNameInput" placeholder="Tu nombre" />
+        <p>Ten en cuenta que después no podrás cambiar tu nombre de usuario</p>
+        <button onclick="startGame()">Comenzar</button>
+      </div>
+    </div>
+
+    <script src="script_mConfi.js"></script>
+
 </body>
 </html>

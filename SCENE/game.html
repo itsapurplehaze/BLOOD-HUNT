@@ -77,6 +77,12 @@
  
 
     <script type="module">
+
+        const playerName = localStorage.getItem("playerName");
+        if (playerName) {
+            document.body.insertAdjacentHTML("afterbegin", `<h1>¡Bienvenido, ${playerName}!</h1>`);
+        }
+        
         import * as THREE from './three.module.js';
         import { OrbitControls } from './OrbitControls.js';
         import { STLLoader } from "./STLLoader.js";
