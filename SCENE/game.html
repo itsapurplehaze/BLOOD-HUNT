@@ -5,40 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego Principal</title>
     <link rel="stylesheet" href="game.css">
-
-    
-    <!-- Cargar el SDK de Facebook -->
-    <script>
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : 'id fb',  // Reemplaza 'tu-app-id' con el appId de tu aplicación de Facebook
-                xfbml      : true,
-                version    : 'v22.0'
-            });
-
-            FB.api(
-                "/idpagina/feed",
-                "POST",
-                {
-                    access_token:
-                    "poner access token"
-                },
-                function (response) {
-                    if(response && !response.error) {
-                        console.log(response);
-                    }
-                }
-            );
-        };
-
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.src = "https://connect.facebook.net/en_US/sdk.js";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
-    </script>
 </head>
 <body>
     <div id="game-container">
@@ -51,27 +17,15 @@
             <button class="pause-btn" id="quit-btn">Abandonar</button>
         </div>
 
-        <!-- Modal para compartir o no compartir -->
-        <div id="game-container">
-            <div id="black-overlay" class="hidden">
-                <h1 class="glitch-text" id="sharing-message">Ofreciendo tu sangre a Zuckerberg...</h1>
-        </div> 
-
         <div id="share-modal" class="hidden">
-            <h1 class="glitch-text">¿Compartir Progreso?</h1>
-            <button class="pause-btn" id="share-btn">Compartir en Facebook</button>
-            <button class="pause-btn" id="skip-share-btn">No Compartir</button>
+            <h1 class="glitch-text">¿Seguro que deseas salir?</h1>
+            <button class="pause-btn" id="skip-share-btn">SI</button>
+            <button class="pause-btn" id="skip-return-btn">MEJOR NO</button>
         </div>
 
         <div id="settings-menu" class="hidden">
             <h1 class="glitch-text">CONFIGURACIÓN</h1>
             <button class="pause-btn" id="back-btn">Volver</button>
-        </div>
-
-        <div id="scoreboard" class="hidden">
-            <h1 class="glitch-text">PUNTUACIÓN</h1>
-            <p>Kills: <span id="kills">0</span></p>
-            <p>Puntos: <span id="points">0</span></p>
         </div>
     </div>
  

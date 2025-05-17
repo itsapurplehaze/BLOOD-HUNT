@@ -1,10 +1,3 @@
-// Variables de puntuaciones
-let kills = 12;
-let points = 2450;
-
-document.getElementById("kills").innerText = kills;
-document.getElementById("points").innerText = points;
-
 // Pausar y reanudar el juego con ESC
 document.addEventListener("keydown", function(event) {
     if (event.key === "Escape") {
@@ -50,41 +43,19 @@ document.addEventListener("keyup", function(event) {
     }
 });
 
-/*API SHIT*/
-// Mostrar modal de compartir al hacer clic en "Abandonar"
-document.getElementById("share-btn").addEventListener("click", function() {
-    const message = `¡He alcanzado ${kills} kills y ${points} puntos en el juego!`;
-
-    if (typeof FB === 'undefined') {
-        alert("El SDK de Facebook no se cargó.");
-        return;
-    }
-
-    document.getElementById("black-overlay").classList.remove("hidden");
-
-    // Compartir en Facebook
-    FB.ui({
-        method: 'share', // share > más simple y nativo para compartir links
-        href: window.location.href, // link a tu página
-        quote: message, // mensaje personalizado
-    }, function(response) {
-        document.getElementById("black-overlay").classList.add("hidden");
-
-        if (response && !response.error_message) {
-            console.log('✅ Compartido exitosamente.');
-            window.location.href = "../MAIN_MENU/main.html";
-        } else {
-            console.log('❌ Falló el compartir.');
-            alert("No se compartió tu progreso. Inténtalo de nuevo.");
-        }
-    });    
-});
-
-// No compartir, redirigir al menú principal
+// Salir redirigir al menú principal
 document.getElementById("skip-share-btn").addEventListener("click", function() {
     console.log('No se compartió el progreso. Redirigiendo al menú...');
     window.location.href = "../MAIN_MENU/main.html";
 });
+
+//Seguir jugando
+document.getElementById("skip-return-btn").addEventListener("click", function() {
+    console.log('Continuemos jugando...');
+    document.getElementById("share-modal").classList.add("hidden");
+});
+
+
 
 
 
