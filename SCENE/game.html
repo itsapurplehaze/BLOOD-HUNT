@@ -8,7 +8,6 @@
 </head>
 <body>
     <div id="game-container">
-
         <!-- Menú de pausa -->
         <div id="pause-menu" class="hidden">
             <h1 class="glitch-text">PAUSA</h1>
@@ -31,7 +30,6 @@
  
 
     <script type="module">
-
         const playerName = localStorage.getItem("playerName");
         if (playerName) {
             document.body.insertAdjacentHTML("afterbegin", `<h1>¡Bienvenido, ${playerName}!</h1>`);
