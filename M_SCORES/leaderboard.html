@@ -10,35 +10,124 @@
     <link href="https://fonts.googleapis.com/css2?family=Lacquer&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="game-container">
-        <div id="All-scores">
-            <h1 class="glitch-text">PUNTUACIONES</h1>
-            <ul>
-                <li data-player="1">
-                    <h2>Player 1</h2>
-                    <p>Kills: <span class="kills">0</span></p>
-                    <p>Puntos: <span class="points">0</span></p>
-                </li>
-            </ul>
-            <ul>
-                <li data-player="2">
-                    <h2>Player 2</h2>
-                    <p>Kills: <span class="kills">0</span></p>
-                    <p>Puntos: <span class="points">0</span></p>
-                </li>
-            </ul>
-            <ul>
-                <li data-player="3">
-                    <h2>Player 3</h2>
-                    <p>Kills: <span class="kills">0</span></p>
-                    <p>Puntos: <span class="points">0</span></p>
-                </li>
-            </ul>
-            <button class="return-btn" onclick="location.href = '../MAIN_MENU/main.html'">Regresar</button>
-        </div>
+  <div id="game-container">
+        <iv id="All-scores" class="container">
+        <h1 class="glitch-text">PUNTUACIONES</h1>
+        
+        <!-- Tabla interactiva -->
+        <table id="scoreboard">
+          <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Kills</th>
+              <th>Puntos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-player="1">
+              <td>Juanito</td>
+              <td class="kills">12</td>
+              <td class="points">1200</td>
+            </tr>
+            <tr data-player="2">
+              <td>Maria</td>
+              <td class="kills">9</td>
+              <td class="points">950</td>
+            </tr>
+            <tr data-player="3">
+              <td>Pablo</td>
+              <td class="kills">8</td>
+              <td class="points">870</td>
+            </tr>
+            <tr data-player="4">
+              <td>Sofía</td>
+              <td class="kills">7</td>
+              <td class="points">760</td>
+            </tr>
+            <tr data-player="5">
+              <td>Carlos</td>
+              <td class="kills">5</td>
+              <td class="points">500</td>
+            </tr>
+          </tbody>
+        </table>    
+        <button id="publish-btn" onclick="publishScore()">Publicar en Facebook</button>
+        <button class="return-btn" onclick="location.href = '../MAIN_MENU/main.html'">Regresar</button>
     </div>
+  </div>
 
-    <script src="scores.js"></script>
+  <!-- Facebook SDK -->
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '1209236660858997',
+        xfbml: true,
+        version: 'v22.0'
+      });
+    };
+
+    let selectedPlayer = null;
+
+    document.querySelectorAll("#scoreboard tbody tr").forEach(row => {
+      row.addEventListener("click", function () {
+        document.querySelectorAll("#scoreboard tbody tr").forEach(r => r.classList.remove("selected"));
+        this.classList.add("selected");
+
+        const cells = this.querySelectorAll("td");
+        selectedPlayer = {
+          name: cells[0].textContent,
+          kills: cells[1].textContent,
+          score: cells[2].textContent
+        };
+      });
+    });
+
+    function publishScore() {
+      if (!selectedPlayer) {
+        alert("Selecciona un jugador primero.");
+        return;
+      }
+
+      FB.login(function (response) {
+        if (response.authResponse) {
+          const message = `🔥 ${selectedPlayer.name} logró ${selectedPlayer.kills} kills y ${selectedPlayer.score} puntos. ¡Qué crack! 🎮`;
+
+          FB.api('/me/accounts', function (accountsResponse) {
+            if (accountsResponse.error) {
+              console.error('Error obteniendo las páginas:', accountsResponse.error);
+              alert('Error obteniendo las páginas.');
+              return;
+            }
+
+            const page = accountsResponse.data.find(p => p.name === 'Graficas Computacionales'); // o hardcodea el ID
+            if (!page) {
+              alert('No se encontró la página.');
+              return;
+            }
+
+            const pageId = page.id;
+            const pageAccessToken = page.access_token;
+
+            FB.api(`/${pageId}/feed`, 'POST', {
+              message: message,
+              access_token: pageAccessToken
+            }, function (postResponse) {
+              if (postResponse.error) {
+                console.error('Error publicando:', postResponse.error);
+                alert('Error al publicar en la página.');
+              } else {
+                alert('¡Publicado exitosamente en Facebook!');
+              }
+            });
+          });
+        } else {
+          alert("Inicio de sesión cancelado.");
+        }
+      }, { scope: 'pages_manage_posts,pages_read_engagement' });
+    }
+  </script>
 
 </body>
 </html>

@@ -1,25 +1,32 @@
-// Al cargar la página, revisamos si ya hay un nombre guardado
 window.onload = function () {
-  const savedName = localStorage.getItem("playerName");   
+  const savedName = localStorage.getItem("playerName");
+
   if (savedName) {
-    // Ya está guardado, no mostramos la modal
-    document.getElementById("playerModal").classList.add("hidden");
-    document.getElementById("welcomeMsg").innerText = `¡Hola de nuevo, ${savedName}! 🎉`;
+    const usarNombre = confirm(`Ya tienes un usuario guardado: "${savedName}". ¿Quieres usarlo?`);
+
+    if (usarNombre) {
+      // Lo manda directo al juego
+      window.location.href = "../SCENE/game.html";
+    } else {
+      // Le damos chance de cambiar el nombre: borramos el anterior
+      localStorage.removeItem("playerName");
+      // Modal se queda visible para que escriba uno nuevo
+    }
   }
-};    
+};
+
 function startGame() {
   const nameInput = document.getElementById("playerNameInput");
-  const playerName = nameInput.value.trim();  
+  const playerName = nameInput.value.trim();
+
   if (playerName === "") {
     alert("Pon tu nombre primero bro...");
     return;
-  }   
-  // Guardar en localStorage
-  localStorage.setItem("playerName", playerName); 
-  // Ocultar la modal
-  document.getElementById("playerModal").classList.add("hidden"); 
-  // Mostrar mensaje
-  document.getElementById("welcomeMsg").innerText = `¡Vamos, ${playerName}! 🎮`;
-  // Redireccionar al juego
+  }
+
+  // Guardar nuevo nombre
+  localStorage.setItem("playerName", playerName);
+
+  // Redirige al juego
   window.location.href = "../SCENE/game.html";
 }
