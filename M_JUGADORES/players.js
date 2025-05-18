@@ -8,10 +8,6 @@ window.onload = () => {
 const modal = document.getElementById("myModal");
 const closeBtn = document.querySelector(".close-btn");
 
-openBtn.onclick = () => {
-  modal.style.display = "flex";
-};
-
 closeBtn.onclick = () => {
   modal.style.display = "none";
 };
