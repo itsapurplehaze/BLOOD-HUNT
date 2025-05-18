@@ -11,10 +11,8 @@
 </head>
 <body>
   <div id="game-container">
-        <iv id="All-scores" class="container">
+      <div id="All-scores" class="container">
         <h1 class="glitch-text">PUNTUACIONES</h1>
-        
-        <!-- Tabla interactiva -->
         <table id="scoreboard">
           <thead>
             <tr>
@@ -33,11 +31,6 @@
               <td>Maria</td>
               <td class="kills">9</td>
               <td class="points">950</td>
-            </tr>
-            <tr data-player="3">
-              <td>Pablo</td>
-              <td class="kills">8</td>
-              <td class="points">870</td>
             </tr>
             <tr data-player="4">
               <td>Sofía</td>
@@ -60,6 +53,64 @@
   <div id="fb-root"></div>
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <script>
+    // Variables pal leaderboard
+    window.onload = function () {
+      const name = localStorage.getItem("playerName");
+      const playerKills = localStorage.getItem("playerKills");
+      const playerScore = localStorage.getItem("playerScore");
+    
+      console.log(name, playerKills, playerScore);
+
+      if (name && playerKills !== null && playerScore !== null) {
+        const tableBody = document.querySelector("#scoreboard tbody");
+        
+        if (!tableBody) {
+          console.error("No se encontró el tbody");
+          return;
+        }
+        const newRow = document.createElement("tr");
+        newRow.innerHTML = `
+          <td>${name}</td>
+          <td class="kills">${playerKills}</td>
+          <td class="points">${playerScore}</td>
+        `;
+        tableBody.appendChild(newRow);
+      } else {
+        console.warn("Faltan datos en localStorage");
+      }
+    
+      ordenarLeaderboardPorPuntaje();
+    
+      // Asegura que todas las filas tengan el evento de selección
+      document.querySelectorAll("#scoreboard tbody tr").forEach(row => {
+        row.addEventListener("click", function () {
+          document.querySelectorAll("#scoreboard tbody tr").forEach(r => r.classList.remove("selected"));
+          this.classList.add("selected");
+        
+          const cells = this.querySelectorAll("td");
+          selectedPlayer = {
+            name: cells[0].textContent,
+            kills: cells[1].textContent,
+            score: cells[2].textContent
+          };
+        });
+      });
+    };
+
+    function ordenarLeaderboardPorPuntaje() {
+      const tbody = document.querySelector("#scoreboard tbody");
+      const filas = Array.from(tbody.querySelectorAll("tr"));
+
+      filas.sort((a, b) => {
+        const puntosA = parseInt(a.querySelector(".points").textContent);
+        const puntosB = parseInt(b.querySelector(".points").textContent);
+        return puntosB - puntosA;
+      });
+
+      tbody.innerHTML = "";
+      filas.forEach(row => tbody.appendChild(row));
+    }
+
     window.fbAsyncInit = function () {
       FB.init({
         appId: '1074980501140199',
@@ -89,7 +140,7 @@
         alert("Selecciona un jugador primero.");
         return;
       }
-
+      
       FB.login(function (response) {
         if (response.authResponse) {
           const message = `🔥 ${selectedPlayer.name} logró ${selectedPlayer.kills} kills y ${selectedPlayer.score} puntos. ¡Qué crack! 🎮`;

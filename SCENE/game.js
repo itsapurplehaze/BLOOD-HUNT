@@ -55,6 +55,9 @@ document.getElementById("skip-return-btn").addEventListener("click", function() 
     document.getElementById("share-modal").classList.add("hidden");
 });
 
+// Al final de la partida:
+localStorage.setItem("playerKills", 20); // o el valor real de kills
+localStorage.setItem("playerScore", 2600); // o el valor real de score
 
 
 
