@@ -44,7 +44,7 @@ body {
 .glitch-text {
     color: red;
     font-family: 'Lacquer', sans-serif;
-    font-size: 40px;
+    font-size: 30px;
     text-shadow: 2px 2px 0 #000, -2px -2px 0 #fff;
     /*font-size: 3rem;
     color: #ff004d;*/
