@@ -28,5 +28,5 @@ function startGame() {
   localStorage.setItem("playerName", playerName);
 
   // Redirige al juego
-  window.location.href = "../SCENE/game.html";
+  window.location.href = "../MAIN_MENU/main.html";
 }
